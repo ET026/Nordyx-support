@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nordyx — Support</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent:        #FE6601;
+      --accent-soft:   rgba(254,102,1,0.12);
+      --accent-border: rgba(254,102,1,0.50);
+      --bg:            #111113;
+      --surface:       #1C1C1E;
+      --surface2:      #242426;
+      --border:        rgba(255,255,255,0.08);
+      --text:          #F2F2F7;
+      --muted:         rgba(235,235,245,0.45);
+      --radius-card:   24px;
+      --radius-sm:     12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      font-size: 16px; line-height: 1.6; min-height: 100vh; overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; top: -200px; left: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(ellipse at center, rgba(254,102,1,0.13) 0%, transparent 65%);
+      pointer-events: none; z-index: 0;
+    }
+    .glass {
+      background: rgba(28,28,30,0.72);
+      backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border: 1px solid var(--accent-border); border-radius: var(--radius-card);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100; padding: 18px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(17,17,19,0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
+      letter-spacing: -0.5px; color: var(--accent); text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-mark {
+      width: 30px; height: 30px; background: var(--accent); border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 16px rgba(254,102,1,0.4); flex-shrink: 0;
+    }
+    nav ul { list-style: none; display: flex; gap: 28px; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    nav a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      position: relative; z-index: 1; padding: 108px 40px 72px;
+      text-align: center; max-width: 760px; margin: 0 auto;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent-soft); border: 1px solid rgba(254,102,1,0.3);
+      border-radius: 100px; padding: 5px 14px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 24px;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+    .hero h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(40px, 6.5vw, 72px); line-height: 1.06; letter-spacing: -2px; margin-bottom: 18px; }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero p { color: var(--muted); font-size: 17px; font-weight: 300; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+    /* SECTIONS */
+    .section { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 0 40px 80px; }
+    .section-label { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+
+    /* CARDS */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+    .card { padding: 24px; transition: transform 0.25s ease, box-shadow 0.25s ease; animation: fadeUp 0.6s ease both; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 16px 44px rgba(0,0,0,0.5); }
+    .card-icon { width: 46px; height: 46px; background: var(--accent-soft); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; font-size: 22px; }
+    .card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; margin-bottom: 6px; letter-spacing: -0.2px; }
+    .card p { color: var(--muted); font-size: 13.5px; line-height: 1.65; }
+
+    /* DIVIDER */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0 40px 72px; position: relative; z-index: 1; }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 8px; }
+    details {
+      background: rgba(28,28,30,0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      overflow: hidden; transition: border-color 0.2s; animation: fadeUp 0.6s ease both;
+    }
+    details[open] { border-color: rgba(254,102,1,0.35); }
+    summary {
+      padding: 18px 22px; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 15px;
+      cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    .faq-toggle { width: 24px; height: 24px; flex-shrink: 0; border: 1px solid rgba(254,102,1,0.3); border-radius: 7px; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 400; color: var(--accent); line-height: 1; transition: background 0.2s; }
+    details[open] .faq-toggle { background: rgba(254,102,1,0.2); }
+    .faq-body { padding: 14px 22px 18px; color: var(--muted); font-size: 14px; line-height: 1.72; border-top: 1px solid var(--border); }
+    .faq-body a { color: var(--accent); text-decoration: none; }
+    .faq-body strong { color: var(--text); font-weight: 600; }
+
+    /* TIER CHIPS inside FAQ */
+    .tier-row { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+    .tier-item { display: flex; align-items: flex-start; gap: 10px; background: var(--surface2); border-radius: 10px; padding: 10px 14px; }
+    .tier-badge { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; flex-shrink: 0; margin-top: 1px; }
+    .tier-free    { background: rgba(254,102,1,0.12); color: var(--accent); }
+    .tier-starter { background: rgba(254,102,1,0.2);  color: var(--accent); }
+    .tier-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* EXERCISE TYPE TABLE */
+    .exercise-grid { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+    .ex-row { display: flex; gap: 10px; align-items: flex-start; background: var(--surface2); border-radius: 8px; padding: 10px 14px; }
+    .ex-badge { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 6px; flex-shrink: 0; min-width: 100px; text-align: center; margin-top: 1px; }
+    .ex-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* LEGAL CARDS */
+    .legal-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .legal-card {
+      display: block; padding: 24px; text-decoration: none;
+      transition: transform 0.25s ease, box-shadow 0.25s ease; animation: fadeUp 0.6s ease both;
+    }
+    .legal-card:hover { transform: translateY(-4px); box-shadow: 0 16px 44px rgba(0,0,0,0.5); }
+    .legal-card-icon { width: 44px; height: 44px; background: var(--accent-soft); border-radius: 13px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; font-size: 20px; }
+    .legal-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 6px; color: var(--text); }
+    .legal-card p { color: var(--muted); font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
+    .legal-card-link { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; gap: 5px; }
+
+    /* CONTACT */
+    .contact-wrap { padding: 44px; animation: fadeUp 0.6s ease both; }
+    .contact-wrap h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.4px; margin-bottom: 6px; }
+    .contact-wrap > p { color: var(--muted); font-size: 14.5px; margin-bottom: 30px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
+    label { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    input, select, textarea {
+      background: var(--surface2); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm); padding: 11px 14px;
+      color: var(--text); font-family: 'DM Sans', -apple-system, sans-serif; font-size: 15px;
+      transition: border-color 0.2s, box-shadow 0.2s; outline: none; width: 100%;
+    }
+    input::placeholder, textarea::placeholder { color: rgba(235,235,245,0.18); }
+    input:focus, select:focus, textarea:focus { border-color: rgba(254,102,1,0.5); box-shadow: 0 0 0 3px rgba(254,102,1,0.08); }
+    select { cursor: pointer; }
+    select option { background: #1c1c1e; }
+    textarea { resize: vertical; min-height: 120px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, #FE6601 0%, #e05000 100%);
+      color: #fff; border: none; border-radius: var(--radius-sm); padding: 13px 26px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px;
+      cursor: pointer; transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(254,102,1,0.3);
+    }
+    .btn:hover { opacity: 0.92; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(254,102,1,0.4); }
+    .btn:active { transform: translateY(0); }
+    .form-note { margin-top: 14px; color: var(--muted); font-size: 13px; }
+    .form-note a { color: var(--accent); text-decoration: none; }
+
+    /* FOOTER */
+    footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 36px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-meta { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; }
+    .gdpr-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(254,102,1,0.5); }
+    .footer-copy { color: var(--muted); font-size: 12px; width: 100%; text-align: center; padding-top: 4px; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .card:nth-child(1) { animation-delay: 0.05s; } .card:nth-child(2) { animation-delay: 0.11s; } .card:nth-child(3) { animation-delay: 0.17s; } .card:nth-child(4) { animation-delay: 0.23s; }
+    details:nth-child(1) { animation-delay: 0.04s; } details:nth-child(2) { animation-delay: 0.09s; } details:nth-child(3) { animation-delay: 0.14s; } details:nth-child(4) { animation-delay: 0.19s; } details:nth-child(5) { animation-delay: 0.24s; } details:nth-child(6) { animation-delay: 0.29s; } details:nth-child(7) { animation-delay: 0.34s; }
+    .legal-card:nth-child(1) { animation-delay: 0.05s; } .legal-card:nth-child(2) { animation-delay: 0.12s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      nav ul { gap: 16px; }
+      .hero { padding: 72px 20px 52px; }
+      .section { padding: 0 20px 56px; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-wrap { padding: 28px 20px; }
+      footer { padding: 28px 20px; }
+      .divider { margin: 0 20px 56px; }
+      .legal-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">
+      <span class="logo-mark">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6.5 6.5h11M6 12h12M6.5 17.5h11"/>
+          <rect x="2" y="5" width="3" height="14" rx="1.5"/>
+          <rect x="19" y="5" width="3" height="14" rx="1.5"/>
+        </svg>
+      </span>
+      Nordyx
+    </a>
+    <ul>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge"><span class="badge-dot"></span>Support Center</div>
+    <h1>How can we<br><em>help you?</em></h1>
+    <p>Everything you need to get the most out of Nordyx — your AI-powered training partner.</p>
+  </div>
+
+  <!-- QUICK LINKS -->
+  <section class="section">
+    <p class="section-label">Quick Help</p>
+    <div class="cards">
+      <div class="card glass">
+        <div class="card-icon">🤖</div>
+        <h3>AI Workout Plans</h3>
+        <p>Personalised plans built around your goal, experience level, weekly schedule, and equipment.</p>
+      </div>
+      <div class="card glass">
+        <div class="card-icon">💬</div>
+        <h3>AI Coaching</h3>
+        <p>Ask your AI coach anything — form tips, exercise swaps, recovery advice, progression guidance.</p>
+      </div>
+      <div class="card glass">
+        <div class="card-icon">📊</div>
+        <h3>Workout Tracking</h3>
+        <p>Log every set, rep, weight, and cardio session. Review history and stay consistent.</p>
+      </div>
+      <div class="card glass">
+        <div class="card-icon">💳</div>
+        <h3>Subscription &amp; Billing</h3>
+        <p>All billing is handled through Apple. Manage or cancel anytime from your Apple ID settings.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <p class="section-label">Frequently Asked Questions</p>
+    <div class="faq-list">
+
+      <details>
+        <summary>How does AI workout generation work?<span class="faq-toggle">+</span></summary>
+        <div class="faq-body">
+          During onboarding you tell Nordyx your primary goal (build muscle, lose fat, get stronger, improve endurance, and more), your experience level, how many days per week you want to train, your preferred session length, and whether you train at home or in a gym. This profile is sent to our backend which uses OpenAI to generate a structured, evidence-based plan with progressive overload built in. Your name, email, and workout history are <strong>never sent to OpenAI</strong>.
+        </div>
+      </details>
+
+      <details>
+        <summary>Can I try Nordyx for free?<span class="faq-toggle">+</span></summary>
+        <div class="faq-body">
+          Yes. You can generate one AI workout plan without creating an account — no sign-in needed. After your free plan you'll need to sign in with Apple to generate more and to save workout history.
+          <div class="tier-row">
+            <div class="tier-item">
+              <span class="tier-badge tier-free">Free</span>
+              <span class="tier-desc">1 AI plan per device · No account required · Try before you commit</span>
+            </div>
+            <div class="tier-item">
+              <span class="tier-badge tier-starter">Starter</span>
+              <span class="tier-desc">A new AI plan every week · Unlimited workout tracking · AI coaching · Full session history</span>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>What exercise types does Nordyx support?<span class="faq-toggle">+</span></summary>
+        <div class="faq-body">
+          Nordyx generates plans with four exercise types, each tracked with the right inputs in the app:
+          <div class="exercise-grid">
+            <div class="ex-row"><span class="ex-badge">Strength</span><span class="ex-desc">Sets, reps &amp; weight — e.g. barbell squat, bench press, deadlift</span></div>
+            <div class="ex-row"><span class="ex-badge">Bodyweight</span><span class="ex-desc">Sets &amp; reps, no equipment — e.g. pull-ups, dips, push-ups, pistol squats</span></div>
+            <div class="ex-row"><span class="ex-badge">Cardio</span><span class="ex-desc">Duration &amp; pace — e.g. treadmill, rower, assault bike</span></div>
+            <div class="ex-row"><span class="ex-badge">Conditioning</span><span class="ex-desc">HIIT circuits, supersets &amp; finishers — tracked as timed or rep-based blocks</span></div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>What does the AI coach do?<span class="faq-toggle">+</span></summary>
+        <div class="faq-body">
+          The AI coach is a conversational assistant built into the app. Ask it anything training-related — form cues for specific exercises, how to swap an exercise for different equipment, how to adjust volume if you're tired or sore, or how to keep progressing your lifts. The AI coach is available on the Starter plan.
+        </div>
+      </details>
+
+      <details>
+        <summary>How do I cancel my subscription?<span class="faq-toggle">+</span></summary>
+        <div class="faq-body">
+          Subscriptions are managed entirely through Apple — Nordyx never handles your payment details directly. To cancel, go to <strong>Settings → [Your Name] → Subscriptions</strong> on your iPhone, tap Nordyx, and tap Cancel Subscription. You keep access until the end of your current billing period. No refunds are given for unused time, in line with Apple's standard policy.
+        </div>
+      </details>
+
+      <details>
+        <summary>Is my data private? What do you collect?<span class="faq-toggle">+</span></summary>
+        <div class="faq-body">
+          We take privacy seriously. Here's exactly what we do and don't collect:<br /><br />
+          <strong>We collect:</strong> your fitness profile (goal, experience, schedule), Apple Sign In token, a random device ID to enforce the free plan limit, and your subscription status.<br /><br />
+          <strong>We do NOT collect:</strong> your Apple ID email (unless you share it), advertising identifiers (IDFA), or third-party analytics data.<br /><br />
+          <strong>Your workout history is stored locally on your device only</strong> — we never have access to your logs. See our full <a href="privacy.html">Privacy Policy</a> for details.
+        </div>
+      </details>
+
+      <details>
+        <summary>My workout history disappeared — what do I do?<span class="faq-toggle">+</span></summary>
+        <div class="faq-body">
+          Workout history is stored locally on your device using Apple's SwiftData framework. If you signed out and back in with the same Apple ID, your data should still be there. If you reinstalled the app, iOS may have cleared local data. If you're still having trouble, contact us below — include your Apple ID email and a description of what happened and we'll help investigate.
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- LEGAL DOCS -->
+  <section class="section">
+    <p class="section-label">Legal</p>
+    <div class="legal-cards">
+      <a href="privacy.html" class="legal-card glass">
+        <div class="legal-card-icon">🔒</div>
+        <h3>Privacy Policy</h3>
+        <p>How we collect, use, and protect your data. Fully GDPR-compliant, written for the Netherlands.</p>
+        <span class="legal-card-link">Read policy <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+      <a href="terms.html" class="legal-card glass">
+        <div class="legal-card-icon">📄</div>
+        <h3>Terms of Use</h3>
+        <p>The rules that govern your use of Nordyx, including subscriptions, liability, and your rights.</p>
+        <span class="legal-card-link">Read terms <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CONTACT FORM -->
+  <section class="section" id="contact">
+    <p class="section-label">Get in Touch</p>
+    <div class="contact-wrap glass">
+      <h2>Send us a message</h2>
+      <p>We typically respond within 48 hours. The more detail you include, the faster we can help.</p>
+
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="topic">Topic</label>
+          <select id="topic" name="topic">
+            <option value="">Select a topic…</option>
+            <option>AI Workout Generation</option>
+            <option>AI Coaching</option>
+            <option>Workout Tracking</option>
+            <option>Subscription &amp; Billing</option>
+            <option>Account &amp; Sign In</option>
+            <option>Privacy / Data Request</option>
+            <option>Bug Report</option>
+            <option>Feature Request</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Describe your issue or question in detail…" required></textarea>
+        </div>
+        <button type="submit" class="btn">
+          Send Message
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <p class="form-note">Or email us directly at <a href="mailto:support@nordyx.app">support@nordyx.app</a></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="index.html" class="logo">
+      <span class="logo-mark">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6.5 6.5h11M6 12h12M6.5 17.5h11"/>
+          <rect x="2" y="5" width="3" height="14" rx="1.5"/>
+          <rect x="19" y="5" width="3" height="14" rx="1.5"/>
+        </svg>
+      </span>
+      Nordyx
+    </a>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-meta"><span class="gdpr-dot"></span>Based in the Netherlands · GDPR compliant</div>
+    <p class="footer-copy">© 2026 Nordyx · Erenay Tozun. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('details').forEach(el => {
+      el.addEventListener('toggle', () => {
+        el.querySelector('.faq-toggle').textContent = el.open ? '−' : '+';
+      });
+    });
+  </script>
+</body>
+</html>
